@@ -1,0 +1,42 @@
+{
+  "toolName": "bamboo",
+  "selfManagedServer": {
+    "pricing": [{
+      "users": "Upto 10 jobs no remote agent",
+      "price": 10
+    },
+      {
+        "users": "1",
+        "price": 1100
+      },
+      {
+        "users": "5",
+        "price": 3030
+      },
+      {
+        "users": "10",
+        "price": 5500
+      },
+      {
+        "users": "25",
+        "price": 11000
+      },
+      {
+        "users": "100",
+        "price": 22000
+      },
+      {
+        "users": "250",
+        "price": 55000
+      },
+      {
+        "users": "500",
+        "price": 82500
+      },
+      {
+        "users": "1000",
+        "price": 126500
+      }
+    ]
+  }
+}

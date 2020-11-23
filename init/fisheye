@@ -1,0 +1,42 @@
+{
+  "toolName": "fisheye",
+  "selfManagedServer": {
+    "pricing": [{
+      "users": "Starter*(5 users w/10 committers, 5 repo)",
+      "price": 10
+    },
+      {
+        "users": "1-10",
+        "price": 1100
+      },
+      {
+        "users": "11-25",
+        "price": 1650
+      },
+      {
+        "users": "26-50",
+        "price": 3030
+      },
+      {
+        "users": "51-100",
+        "price": 5500
+      },
+      {
+        "users": "101-250",
+        "price": 11000
+      },
+      {
+        "users": "251-500",
+        "price": 13200
+      },
+      {
+        "users": "501-2000",
+        "price": 17600
+      },
+      {
+        "users": "2001+",
+        "price": 22000
+      }
+    ]
+  }
+}
