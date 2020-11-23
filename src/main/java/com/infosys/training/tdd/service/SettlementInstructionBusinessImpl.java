@@ -137,7 +137,7 @@ public class SettlementInstructionBusinessImpl {
     * */
 
     public Boolean verifyUIInputedData(SettlementInstruction settlementInstruction) {
-        List<String> response = settlementInstructionService.validateInstructionUsingAPI(settlementInstruction);
+        /*List<String> response = settlementInstructionService.validateInstructionUsingAPI(settlementInstruction);
         if (response == null){
             throw new NullPointerException();
         }
@@ -147,13 +147,9 @@ public class SettlementInstructionBusinessImpl {
             else
                 return Boolean.FALSE;
         }
+        return Boolean.TRUE;*/
 
-
-
-
-        return Boolean.TRUE;
-
-        /*List<String> response =
+        List<String> response =
                 settlementInstructionService.validateInstructionUsingAPI(settlementInstruction);
         boolean returnedValue = true;
         if (response == null)
@@ -170,6 +166,6 @@ public class SettlementInstructionBusinessImpl {
                 break;
             }
         }
-        return returnedValue;*/
+        return returnedValue;
     }
 }
