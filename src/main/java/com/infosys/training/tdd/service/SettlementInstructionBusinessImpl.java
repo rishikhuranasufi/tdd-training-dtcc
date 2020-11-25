@@ -29,38 +29,32 @@ public class SettlementInstructionBusinessImpl {
                 StringUtils.isEmpty(settlementInstruction.getFutureEffectiveSICOntroller())){
             return Boolean.FALSE;
         }else{
-            Pattern futureEffectivePattern = Pattern.compile("[a-zA-Z0-9]*");
-            Matcher matcher = futureEffectivePattern.matcher(settlementInstruction.getFutureEffectiveSICOntroller());
-            if (!matcher.matches()) {
-                logger.error("string '"+settlementInstruction.getFutureEffectiveSICOntroller() + "' contains special character");
-                return Boolean.FALSE;
-            }
+            if (checkFutureEffectiveSIController(settlementInstruction)) return Boolean.FALSE;
             logger.info(settlementInstruction.getFutureEffectiveSICOntroller() + "' doesn't contains special character");
 
-            Pattern settlementModelNamePattern = Pattern.compile("[a-zA-Z0-9]*");
-            Matcher settlementModelNameMatcher = settlementModelNamePattern.matcher(settlementInstruction.getSettlementModelName());
-            if (!settlementModelNameMatcher.matches()) {
-                logger.error(settlementInstruction.getSettlementModelName() + "' contains special character");
-                return Boolean.FALSE;
-            }
+            if (checkSettlementModelName(settlementInstruction)) return Boolean.FALSE;
             logger.info(settlementInstruction.getSettlementModelName() + "' doesn't contains special character");
-            try{// ResolverStyle.STRICT for 30, 31 days checking, and also leap year.
-                LocalDate.parse(settlementInstruction.getSettlementDate(),
-                DateTimeFormatter.ofPattern("uuuu-M-d")
-                           .withResolverStyle(ResolverStyle.STRICT));
-                logger.info(settlementInstruction.getSettlementDate()+" is valid date format");
-                }
-                catch (DateTimeParseException e){
-                     //Date format is invalid
-                    logger.error(settlementInstruction.getSettlementDate()+" is Invalid Date format");
-                    return Boolean.FALSE;
-            }
             return Boolean.TRUE;
-            // Next Steps :
-            // Find Defect in code
-            // Test Case using TDD
         }
     }
 
+    private boolean checkSettlementModelName(SettlementInstruction settlementInstruction) {
+        Pattern settlementModelNamePattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher settlementModelNameMatcher = settlementModelNamePattern.matcher(settlementInstruction.getSettlementModelName());
+        if (!settlementModelNameMatcher.matches()) {
+            logger.error(settlementInstruction.getSettlementModelName() + "' contains special character");
+            return true;
+        }
+        return false;
+    }
 
+    private boolean checkFutureEffectiveSIController(SettlementInstruction settlementInstruction) {
+        Pattern futureEffectivePattern = Pattern.compile("[a-zA-Z0-9]*");
+        Matcher matcher = futureEffectivePattern.matcher(settlementInstruction.getFutureEffectiveSICOntroller());
+        if (!matcher.matches()) {
+            logger.error("string '"+settlementInstruction.getFutureEffectiveSICOntroller() + "' contains special character");
+            return true;
+        }
+        return false;
+    }
 }
