@@ -33,13 +33,13 @@ public class SettlementInstructionController {
     public ResponseEntity<?> verifyDetails(@PathVariable String futureEffectiveSICOntroller,
                                             @PathVariable String settlementModelName, @PathVariable String settlementDate) {
 
-        logger.info("Inside Save Details");
-        if (settlementInstructionBusinessImpl.validate(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
+        logger.info("Verify Details");
+        /*if (settlementInstructionBusinessImpl.validate(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
             return ResponseEntity.ok(new ApiResponse(true,"Details Verified successfully"));
         else
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
-
-        //return ResponseEntity.ok(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
+        */
+        return ResponseEntity.ok(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
     }
 
     SettlementInstruction getSettlementInstruction(String futureEffectiveSICOntroller, String settlementModelName, String settlementDate) {
