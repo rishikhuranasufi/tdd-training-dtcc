@@ -54,7 +54,9 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.mockito/mockito-all -->
-        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core
+             https://javadoc.io/static/org.mockito/mockito-core/3.6.28/org/mockito/Mockito.html#5
+        -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -62,33 +64,23 @@
             <scope>test</scope>
         </dependency>
 
-        <!--        <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-data-mongodb</artifactId>
-                </dependency>-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>-->
 
-       <!-- <dependency>
+        <dependency>
             <groupId>org.powermock</groupId>
             <artifactId>powermock-api-mockito</artifactId>
             <version>1.7.4</version>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mockito</groupId>
+                    <artifactId>mockito-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -96,7 +88,7 @@
             <artifactId>powermock-module-junit4</artifactId>
             <version>2.0.2</version>
             <scope>test</scope>
-        </dependency>-->
+        </dependency>
     </dependencies>
 
     <build>
@@ -105,70 +97,70 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-			<plugin>
-				<groupId>org.jacoco</groupId>
-				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>prepare-agent</goal>
-						</goals>
-					</execution>
-					<!-- attached to Maven test phase -->
-					<execution>
-						<id>report</id>
-						<phase>test</phase>
-						<goals>
-							<goal>report</goal>
-						</goals>
-					</execution>
-					
-					<!-- Add this checking and The jacoco:check goal is attached to Maven verify phase.
-					More Details https://www.jacoco.org/jacoco/trunk/doc/check-mojo.html
-					-->
-					<execution>
-						<id>jacoco-check</id>
-						<goals>
-							<goal>check</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<rule>
-									<element>PACKAGE</element>
-									<limits>
-										<limit>
-											<counter>LINE</counter>
-											<value>COVEREDRATIO</value>
-											<minimum>0.9</minimum>
-										</limit>
-									</limits>
-								</rule>
-							</rules>
-						</configuration>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <!-- attached to Maven test phase -->
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+
+                    <!-- Add this checking and The jacoco:check goal is attached to Maven verify phase.
+                    More Details https://www.jacoco.org/jacoco/trunk/doc/check-mojo.html
+                    -->
+                    <execution>
+                        <id>jacoco-check</id>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <rule>
+                                    <element>PACKAGE</element>
+                                    <limits>
+                                        <limit>
+                                            <counter>LINE</counter>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.9</minimum>
+                                        </limit>
+                                    </limits>
+                                </rule>
+                            </rules>
+                        </configuration>
                         <!-- default target/jscoco/site/* -->
-                       <!-- <configuration>
-                            <outputDirectory>target/jacoco-report</outputDirectory>
-                        </configuration>-->
-					</execution>
-				</executions>
-			</plugin>
+                        <!-- <configuration>
+                             <outputDirectory>target/jacoco-report</outputDirectory>
+                         </configuration>-->
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
-         
-	
-	
-	<repositories>
-	  <repository>
-			<id>central</id>
-			<name>Central Repository</name>
-			<url>https://repo.maven.apache.org/maven2</url>
-			<layout>default</layout>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-	</repository>
 
-</repositories>
+
+
+    <repositories>
+        <repository>
+            <id>central</id>
+            <name>Central Repository</name>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+    </repositories>
 
 </project>
