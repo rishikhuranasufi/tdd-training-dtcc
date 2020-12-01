@@ -18,7 +18,7 @@ public class SettlementInstructionBusinessImplTest {
 4. Instantiate Service class in test class.
 5. Now define that method in test class, it will fail/ show error, fix it.
 6. As aware we need to define these three inputted values which will be received from frontEnd application.
- */
+ *//*
 
     @Before
     public void setUp(){
@@ -28,7 +28,7 @@ public class SettlementInstructionBusinessImplTest {
 
     @Test
     public void validateData() {
-        /* Faking, Triangulation, three laws ..
+        *//* Faking, Triangulation, three laws ..
         **
         * Fake It Until You Make IT" TDD approach
         * You first create a unit test for new functionality that does not exist.
@@ -36,7 +36,7 @@ public class SettlementInstructionBusinessImplTest {
         * You then create that method that doesn't do anything and your unit test compiles, but of course, fails.
         * You then go on building your method, underlying functionality etc until your unit test succeeds.
         * That's (kind of) test driven development.
-        * */
+        * *//*
         // Scenario two and Scenario 3.
         // Advance and Database Unit testing ..
 
@@ -139,7 +139,7 @@ public class SettlementInstructionBusinessImplTest {
         isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
-    }
+    }*/
 
 
 

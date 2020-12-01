@@ -20,9 +20,36 @@ import java.util.regex.Pattern;
 @Component(value = "settlementInstructionBusinessImpl")
 public class SettlementInstructionBusinessImpl {
 
+    private final SettlementInstructionService settlementInstructionService;
+
+    public SettlementInstructionBusinessImpl(SettlementInstructionService settlementInstructionService) {
+        this.settlementInstructionService = settlementInstructionService;
+    }
+
     private static final Logger logger = LoggerFactory.getLogger(SettlementInstructionBusinessImpl.class);
 
-    public Boolean validate(SettlementInstruction settlementInstruction) {
+    public Boolean validate
+            (SettlementInstruction settlementInstruction){
+
+        List<String> response = settlementInstructionService.validateUsingAPI(settlementInstruction);
+        if(response == null){
+            throw new NullPointerException();
+        }
+
+        for(String resp : response){
+            //4 test cases around this one
+            // First one with ==
+            // Second one with StringUtils
+            // Third one with string.contains()
+            // Fourth one with null
+            if(StringUtils.isEmpty(resp) || resp.contains("_false")){
+                return Boolean.FALSE;
+            }
+        }
+        return Boolean.TRUE;
+    }
+
+/*    public Boolean validate(SettlementInstruction settlementInstruction) {
 
         if (StringUtils.isEmpty(settlementInstruction.getSettlementDate()) ||
                 StringUtils.isEmpty(settlementInstruction.getSettlementModelName()) ||
@@ -36,7 +63,7 @@ public class SettlementInstructionBusinessImpl {
             logger.info(settlementInstruction.getSettlementModelName() + "' doesn't contains special character");
             return Boolean.TRUE;
         }
-    }
+    }*/
 
     private boolean checkSettlementModelName(SettlementInstruction settlementInstruction) {
         Pattern settlementModelNamePattern = Pattern.compile("[a-zA-Z0-9]*");
