@@ -1,5 +1,7 @@
 package com.infosys.training.tdd.service;
 
+import com.infosys.training.tdd.dao.SettlementInstructionDaoImpl;
+import com.infosys.training.tdd.exception.IssueWhileExecutingQuery;
 import com.infosys.training.tdd.helper.Common;
 import com.infosys.training.tdd.vo.SettlementInstruction;
 import org.slf4j.Logger;
@@ -21,9 +23,12 @@ import java.util.regex.Pattern;
 public class SettlementInstructionBusinessImpl {
 
     private final SettlementInstructionService settlementInstructionService;
+    private final SettlementInstructionDaoImpl settlementInstructionDao;
 
-    public SettlementInstructionBusinessImpl(SettlementInstructionService settlementInstructionService) {
+    public SettlementInstructionBusinessImpl(SettlementInstructionService settlementInstructionService,
+                                             SettlementInstructionDaoImpl settlementInstructionDao) {
         this.settlementInstructionService = settlementInstructionService;
+        this.settlementInstructionDao = settlementInstructionDao;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(SettlementInstructionBusinessImpl.class);
@@ -37,16 +42,39 @@ public class SettlementInstructionBusinessImpl {
         }
 
         for(String resp : response){
-            //4 test cases around this one
-            // First one with ==
-            // Second one with StringUtils
-            // Third one with string.contains()
-            // Fourth one with null
             if(StringUtils.isEmpty(resp) || resp.contains("_false")){
                 return Boolean.FALSE;
             }
         }
         return Boolean.TRUE;
+    }
+
+    public Boolean saveDetails(SettlementInstruction settlementInstruction) throws Exception{
+        try {
+            int inserted = settlementInstructionDao.insert(settlementInstruction);
+            if (inserted == 1){
+                System.out.println("Inserted Successfully");
+                return Boolean.TRUE;
+            }else
+                return Boolean.FALSE;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            throw new IssueWhileExecutingQuery();
+        }
+    }
+
+    public Boolean deleteDetails(SettlementInstruction settlementInstruction) throws Exception {
+        try{
+            int isDeleted = settlementInstructionDao.delete(settlementInstruction);
+            if (isDeleted == 1)
+                return Boolean.TRUE;
+            else
+                return Boolean.FALSE;
+        }catch (Exception ex){
+            throw new IssueWhileExecutingQuery();
+        }
+
+        //return null;
     }
 
 /*    public Boolean validate(SettlementInstruction settlementInstruction) {
@@ -63,7 +91,7 @@ public class SettlementInstructionBusinessImpl {
             logger.info(settlementInstruction.getSettlementModelName() + "' doesn't contains special character");
             return Boolean.TRUE;
         }
-    }*/
+    }
 
     private boolean checkSettlementModelName(SettlementInstruction settlementInstruction) {
         Pattern settlementModelNamePattern = Pattern.compile("[a-zA-Z0-9]*");
@@ -83,5 +111,5 @@ public class SettlementInstructionBusinessImpl {
             return true;
         }
         return false;
-    }
+    }*/
 }

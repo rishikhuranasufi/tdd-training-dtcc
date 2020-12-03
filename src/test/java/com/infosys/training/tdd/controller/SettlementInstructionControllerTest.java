@@ -1,4 +1,5 @@
 package com.infosys.training.tdd.controller;
+import com.infosys.training.tdd.dao.SettlementInstructionDaoImpl;
 import com.infosys.training.tdd.service.SettlementInstructionBusinessImpl;
 import com.infosys.training.tdd.vo.SettlementInstruction;
 import org.junit.Test;
@@ -32,12 +33,18 @@ public class SettlementInstructionControllerTest {
         SettlementInstruction settlementInstruction =
                 mock(SettlementInstruction.class);
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         Mockito.doReturn(settlementInstruction).when(settlementInstructionController).
                 getSettlementInstruction(futureSIController,modelName,date);
 
         Mockito.when(settlementInstructionBusinessImpl
                 .validate(settlementInstruction))
                 .thenReturn(Boolean.TRUE);
+        Mockito.when(settlementInstructionDao
+                .insert(settlementInstruction))
+                .thenReturn(1);
 
         ResponseEntity<?> response = settlementInstructionController.
                 verifyDetails(futureSIController, modelName, date);

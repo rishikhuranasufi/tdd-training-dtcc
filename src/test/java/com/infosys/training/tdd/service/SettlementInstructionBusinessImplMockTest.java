@@ -1,5 +1,7 @@
 package com.infosys.training.tdd.service;
 
+import com.infosys.training.tdd.dao.SettlementInstructionDaoImpl;
+import com.infosys.training.tdd.exception.IssueWhileExecutingQuery;
 import com.infosys.training.tdd.vo.SettlementInstruction;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -22,6 +24,10 @@ public class SettlementInstructionBusinessImplMockTest {
     public void validateWhenResponseAPIContainsAnEmptyElement(){
         SettlementInstructionService settlementInstructionService =
                 Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         String futureEffectiveSIController = "emptyValue";
         String modelName = "modelName";
         String date = "date";
@@ -32,7 +38,7 @@ public class SettlementInstructionBusinessImplMockTest {
         Mockito.when(settlementInstructionService.validateUsingAPI(settlementInstruction)).
                 thenReturn(response);
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionService);
+                SettlementInstructionBusinessImpl(settlementInstructionService,settlementInstructionDao);
 
         Boolean isVerifed = settlementInstructionBusiness.validate(settlementInstruction);
 
@@ -46,8 +52,11 @@ public class SettlementInstructionBusinessImplMockTest {
         SettlementInstructionService settlementInstructionService =
                 Mockito.mock(SettlementInstructionService.class);
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionService);
+                SettlementInstructionBusinessImpl(settlementInstructionService,settlementInstructionDao);
         String futureEffectiveSIController = "nullValue";
         String modelName = "modelName";
         String date = "date";
@@ -68,8 +77,11 @@ public class SettlementInstructionBusinessImplMockTest {
         SettlementInstructionService settlementInstructionService =
                 Mockito.mock(SettlementInstructionService.class);
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionService);
+                SettlementInstructionBusinessImpl(settlementInstructionService,settlementInstructionDao);
         String futureEffectiveSIController = "null";
         String modelName = "modelName";
         String date = "date";
@@ -86,8 +98,12 @@ public class SettlementInstructionBusinessImplMockTest {
     public void validateSettlementModelUsingSerivceAPICallWithAnyOfStringAsValid(){
         SettlementInstructionService settlementInstructionService =
                 Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService);
+                new SettlementInstructionBusinessImpl(settlementInstructionService,settlementInstructionDao);
         String futureEffectiveSIController="abcTest";
         String modelName="abcTest";
         String date="1998-10-10";
@@ -99,6 +115,163 @@ public class SettlementInstructionBusinessImplMockTest {
                 thenReturn(response);
         Boolean isVerified = settlementInstructionBusinessImpl.validate(settlementInstruction);
         assertEquals(Boolean.TRUE, isVerified);
+    }
+
+    @Test
+    public void saveDetailsWithQueryReturnOne() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
+        .thenReturn(1);
+        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
+        assertEquals(Boolean.TRUE, isDetailsSaved);
+
+
+    }
+
+    @Test
+    public void saveDetailsWithQueryReturnOtherThanOne() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
+        .thenReturn(-1);
+        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
+        assertEquals(Boolean.FALSE, isDetailsSaved);
+
+
+    }
+
+    @Test(expected = IssueWhileExecutingQuery.class)
+    public void saveDetailsWithQueryReturnException() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
+        .thenThrow(new Exception());
+        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
+        assertEquals(Boolean.FALSE, isDetailsSaved);
+
+
+    }
+
+
+    @Test
+    public void deleteDetailsWithQueryReturningOne() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
+                .thenReturn(1);
+        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
+        assertEquals(Boolean.TRUE, isDetailsDeleted);
+    }
+
+    @Test
+    public void deleteDetailsWithQueryReturningOtherThanOne() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
+                .thenReturn(-2);
+        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
+        assertEquals(Boolean.FALSE, isDetailsDeleted);
+    }
+
+    @Test(expected = IssueWhileExecutingQuery.class)
+    public void deleteDetailsWithQueryReturningException() throws Exception {
+
+        SettlementInstructionService settlementInstructionService =
+                Mockito.mock(SettlementInstructionService.class);
+
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
+        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
+                new SettlementInstructionBusinessImpl(settlementInstructionService,
+                        settlementInstructionDao);
+
+        String futureEffectiveSIController="abcTest";
+        String modelName="abcTest";
+        String date="1998-10-10";
+        SettlementInstruction settlementInstruction =
+                new SettlementInstruction(futureEffectiveSIController, modelName, date);
+
+        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
+                .thenThrow(new Exception());
+        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
+        assertEquals(Boolean.FALSE, isDetailsDeleted);
     }
 
 }

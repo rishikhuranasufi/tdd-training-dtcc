@@ -1,4 +1,8 @@
 package com.infosys.training.tdd.exception;
 
-public class IssueWhileExecutingQuery {
+public class IssueWhileExecutingQuery extends Exception{
+
+    public IssueWhileExecutingQuery(){
+        super();
+    }
 }

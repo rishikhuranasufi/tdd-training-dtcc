@@ -1,7 +1,9 @@
 package com.infosys.training.tdd.service;
 
+import com.infosys.training.tdd.dao.SettlementInstructionDaoImpl;
 import com.infosys.training.tdd.vo.SettlementInstruction;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +22,11 @@ public class SettlementInstructionBusinessImplStubTest {
         SettlementInstructionServiceStub settlementInstructionServiceStub =
                 new SettlementInstructionServiceStub();
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionServiceStub);
+                SettlementInstructionBusinessImpl(settlementInstructionServiceStub, settlementInstructionDao);
         String futureEffectiveSIController = "emptyValue";
         String modelName = "modelName";
         String date = "date";
@@ -37,8 +42,11 @@ public class SettlementInstructionBusinessImplStubTest {
         SettlementInstructionServiceStub settlementInstructionServiceStub =
                 new SettlementInstructionServiceStub();
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionServiceStub);
+                SettlementInstructionBusinessImpl(settlementInstructionServiceStub,settlementInstructionDao);
         String futureEffectiveSIController = "nullValue";
         String modelName = "modelName";
         String date = "date";
@@ -54,8 +62,11 @@ public class SettlementInstructionBusinessImplStubTest {
         SettlementInstructionServiceStub settlementInstructionServiceStub =
                 new SettlementInstructionServiceStub();
 
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
-                SettlementInstructionBusinessImpl(settlementInstructionServiceStub);
+                SettlementInstructionBusinessImpl(settlementInstructionServiceStub,settlementInstructionDao);
         String futureEffectiveSIController = "null";
         String modelName = "modelName";
         String date = "date";
@@ -68,8 +79,11 @@ public class SettlementInstructionBusinessImplStubTest {
     public void validateSettlementModelUsingSerivceAPICallWithAnyOfStringAsValid(){
         SettlementInstructionServiceStub settlementInstructionServiceStub =
                 new SettlementInstructionServiceStub();
+        SettlementInstructionDaoImpl settlementInstructionDao =
+                Mockito.mock(SettlementInstructionDaoImpl.class);
+
         SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionServiceStub);
+                new SettlementInstructionBusinessImpl(settlementInstructionServiceStub,settlementInstructionDao);
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName="abcTest";
         String settlementDate="1998-10-10";
