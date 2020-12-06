@@ -34,8 +34,25 @@ public class SettlementInstructionBusinessImpl {
 
             if (checkSettlementModelName(settlementInstruction)) return Boolean.FALSE;
             logger.info(settlementInstruction.getSettlementModelName() + "' doesn't contains special character");
+
+            if (checkDateFormating(settlementInstruction)) return Boolean.FALSE;
             return Boolean.TRUE;
         }
+    }
+
+    private boolean checkDateFormating(SettlementInstruction settlementInstruction) {
+        try{// ResolverStyle.STRICT for 30, 31 days checking, and also leap year.
+            LocalDate.parse(settlementInstruction.getSettlementDate(),
+                    DateTimeFormatter.ofPattern("uuuu-M-d")
+                            .withResolverStyle(ResolverStyle.STRICT));
+            logger.info(settlementInstruction.getSettlementDate()+" is valid date format");
+        }
+        catch (DateTimeParseException e){
+            /* Date format is invalid */
+            logger.error(settlementInstruction.getSettlementDate()+" is Invalid Date format");
+            return true;
+        }
+        return false;
     }
 
     private boolean checkSettlementModelName(SettlementInstruction settlementInstruction) {

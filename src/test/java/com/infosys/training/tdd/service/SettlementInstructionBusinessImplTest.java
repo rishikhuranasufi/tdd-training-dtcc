@@ -141,6 +141,39 @@ public class SettlementInstructionBusinessImplTest {
         assertEquals(Boolean.FALSE, isVerified);
     }
 
+    @Test
+    public void validateSettlementInstructionDateWithValidValues(){
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="1998-10-10";
+        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.TRUE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateWithInValidValues(){
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="1998-30-30";
+        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateWithInValidValuesAsAlphabhets(){
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="abcText";
+        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
 
 
 }
