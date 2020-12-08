@@ -1,8 +1,8 @@
-package com.infosys.training.tdd.controller;
+package com.learn.tdd.controller;
 
-import com.infosys.training.tdd.payload.ApiResponse;
-import com.infosys.training.tdd.service.SettlementInstructionBusinessImpl;
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.payload.ApiResponse;
+import com.learn.tdd.service.SettlementInstructionBusinessImpl;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,7 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.helper.Common;
-import com.infosys.training.tdd.vo.SettlementInstruction;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class SettlementInstructionBusinessImplTest {
 
@@ -28,7 +24,7 @@ public class SettlementInstructionBusinessImplTest {
 
     @Test
     public void validateData() {
-        /* Faking, Triangulation, three laws ..
+        /* Remember Faking, Triangulation and three laws ..
         **
         * Fake It Until You Make IT" TDD approach
         * You first create a unit test for new functionality that does not exist.
