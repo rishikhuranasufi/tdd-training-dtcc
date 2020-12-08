@@ -1,7 +1,7 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.helper.Common;
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.helper.Common;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -173,7 +173,4 @@ public class SettlementInstructionBusinessImplTest {
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
-
-
-
 }
