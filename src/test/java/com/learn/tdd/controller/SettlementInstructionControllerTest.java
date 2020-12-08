@@ -1,6 +1,6 @@
-package com.infosys.training.tdd.controller;
-import com.infosys.training.tdd.service.SettlementInstructionBusinessImpl;
-import com.infosys.training.tdd.vo.SettlementInstruction;
+package com.learn.tdd.controller;
+import com.learn.tdd.service.SettlementInstructionBusinessImpl;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Test;
 
 import org.mockito.Mockito;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class SettlementInstructionControllerTest {
 

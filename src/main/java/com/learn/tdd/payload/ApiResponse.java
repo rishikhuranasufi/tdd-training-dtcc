@@ -1,4 +1,4 @@
-package com.infosys.training.tdd.payload;
+package com.learn.tdd.payload;
 
 public class ApiResponse {
     private Boolean success;

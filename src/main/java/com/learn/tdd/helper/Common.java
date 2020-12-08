@@ -1,4 +1,4 @@
-package com.infosys.training.tdd.helper;
+package com.learn.tdd.helper;
 
 public class Common {
     public static final String FUTURE_EFFECTIVE_PATTERN = "[a-zA-Z]*";

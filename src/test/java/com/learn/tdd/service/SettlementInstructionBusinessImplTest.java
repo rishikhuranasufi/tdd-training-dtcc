@@ -1,7 +1,7 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.helper.Common;
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.helper.Common;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,7 +27,18 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateData() {
+    public void validateIfFutureEffectiveIsNull(){
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        String futureEffectiveSICOntroller=null;
+        String settlementModelName="abcTest123";
+        String settlementDate="10-10-2020";
+        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateDetailsIfFieldsAreNull() {
         /* Faking, Triangulation, three laws ..
         **
         * Fake It Until You Make IT" TDD approach
@@ -50,7 +61,7 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateIfFutureEffectiveIsNotNullButModelNameIsNull(){
+    public void validateIfModelNameAndDateIsNull(){
         settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName=null;
@@ -83,11 +94,19 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateRegex(){
-        assertEquals(Boolean.FALSE, "@34eiodjioedjio".matches(Common.FUTURE_EFFECTIVE_PATTERN));
-        assertEquals(Boolean.TRUE, "abcABC".matches(Common.FUTURE_EFFECTIVE_PATTERN));
+    public void validateRegexWithNumericValues(){
+        assertEquals(Boolean.FALSE, "34eiodjioedjio".matches(Common.FUTURE_EFFECTIVE_PATTERN));
+    }
+
+    @Test
+    public void validateRegexWithSpecialCharacters(){
         assertEquals(Boolean.FALSE, "!@@$$!!@!#$(*^".matches(Common.FUTURE_EFFECTIVE_PATTERN));
 
+    }
+
+    @Test
+    public void validateRegexWithCorrectValue(){
+        assertEquals(Boolean.TRUE, "abcABC".matches(Common.FUTURE_EFFECTIVE_PATTERN));
     }
     @Test
     public void validateFutureEffectiveSIControllerWithSpecialCharactersAndInvalidScenarios(){
@@ -107,12 +126,16 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateRegexSettlementModelName(){
-        assertEquals(Boolean.FALSE, "@34eiodjioedjio".matches(Common.MODEL_NAME_PATTERN));
-        assertEquals(Boolean.TRUE, "abcABC123".matches(Common.MODEL_NAME_PATTERN));
+    public void validateRegexSettlementModelNameWithSpecialCharacters(){
         assertEquals(Boolean.FALSE, "!@@$$!!@!#$(*^".matches(Common.MODEL_NAME_PATTERN));
 
     }
+
+    @Test
+    public void validateRegexSettlementModelNameWithValidCharacters(){
+        assertEquals(Boolean.TRUE, "abcABC123".matches(Common.MODEL_NAME_PATTERN));
+    }
+
     @Test
     public void validateFutureEffectiveSIControllerWithValidScenario(){
         settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
@@ -140,7 +163,4 @@ public class SettlementInstructionBusinessImplTest {
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
-
-
-
 }
