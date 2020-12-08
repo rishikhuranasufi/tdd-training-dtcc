@@ -41,31 +41,11 @@ public class SettlementInstructionBusinessImpl {
     }
 
     public Boolean saveDetails(SettlementInstruction settlementInstruction) throws Exception{
-        try {
-            int inserted = settlementInstructionDao.insert(settlementInstruction);
-            if (inserted == 1){
-                System.out.println("Inserted Successfully");
-                return Boolean.TRUE;
-            }else
-                return Boolean.FALSE;
-        }catch (Exception ex){
-            ex.printStackTrace();
-            throw new IssueWhileExecutingQuery();
-        }
+        return null;
     }
 
     public Boolean deleteDetails(SettlementInstruction settlementInstruction) throws Exception {
-        try{
-            int isDeleted = settlementInstructionDao.delete(settlementInstruction);
-            if (isDeleted == 1)
-                return Boolean.TRUE;
-            else
-                return Boolean.FALSE;
-        }catch (Exception ex){
-            throw new IssueWhileExecutingQuery();
-        }
-
-        //return null;
+        return null;
     }
 
 /*    public Boolean validate(SettlementInstruction settlementInstruction) {

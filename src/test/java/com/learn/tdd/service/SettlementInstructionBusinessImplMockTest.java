@@ -120,81 +120,14 @@ public class SettlementInstructionBusinessImplMockTest {
     @Test
     public void saveDetailsWithQueryReturnOne() throws Exception {
 
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
-
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
-        .thenReturn(1);
-        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
-        assertEquals(Boolean.TRUE, isDetailsSaved);
-
-
     }
 
     @Test
     public void saveDetailsWithQueryReturnOtherThanOne() throws Exception {
-
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
-
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
-        .thenReturn(-1);
-        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
-        assertEquals(Boolean.FALSE, isDetailsSaved);
-
-
     }
 
-    @Test(expected = IssueWhileExecutingQuery.class)
+    //@Test(expected = IssueWhileExecutingQuery.class)
     public void saveDetailsWithQueryReturnException() throws Exception {
-
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
-
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.insert(settlementInstruction))
-        .thenThrow(new Exception());
-        Boolean isDetailsSaved = settlementInstructionBusinessImpl.saveDetails(settlementInstruction);
-        assertEquals(Boolean.FALSE, isDetailsSaved);
-
 
     }
 
@@ -202,76 +135,17 @@ public class SettlementInstructionBusinessImplMockTest {
     @Test
     public void deleteDetailsWithQueryReturningOne() throws Exception {
 
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
-
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
-                .thenReturn(1);
-        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
-        assertEquals(Boolean.TRUE, isDetailsDeleted);
     }
 
     @Test
     public void deleteDetailsWithQueryReturningOtherThanOne() throws Exception {
 
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
-
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
-                .thenReturn(-2);
-        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
-        assertEquals(Boolean.FALSE, isDetailsDeleted);
     }
 
-    @Test(expected = IssueWhileExecutingQuery.class)
+    //@Test(expected = IssueWhileExecutingQuery.class)
     public void deleteDetailsWithQueryReturningException() throws Exception {
 
-        SettlementInstructionService settlementInstructionService =
-                Mockito.mock(SettlementInstructionService.class);
 
-        SettlementInstructionDaoImpl settlementInstructionDao =
-                Mockito.mock(SettlementInstructionDaoImpl.class);
-
-        SettlementInstructionBusinessImpl settlementInstructionBusinessImpl =
-                new SettlementInstructionBusinessImpl(settlementInstructionService,
-                        settlementInstructionDao);
-
-        String futureEffectiveSIController="abcTest";
-        String modelName="abcTest";
-        String date="1998-10-10";
-        SettlementInstruction settlementInstruction =
-                new SettlementInstruction(futureEffectiveSIController, modelName, date);
-
-        Mockito.when(settlementInstructionDao.delete(settlementInstruction))
-                .thenThrow(new Exception());
-        Boolean isDetailsDeleted = settlementInstructionBusinessImpl.deleteDetails(settlementInstruction);
-        assertEquals(Boolean.FALSE, isDetailsDeleted);
     }
 
 }
