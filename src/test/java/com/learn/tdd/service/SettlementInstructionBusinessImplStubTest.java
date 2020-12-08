@@ -1,6 +1,6 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -25,10 +25,10 @@ public class SettlementInstructionBusinessImplStubTest {
         String futureEffectiveSIController = "emptyValue";
         String modelName = "modelName";
         String date = "date";
-        Boolean isVerifed = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
+        Boolean isVerified = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
                 modelName, date));
 
-        assertEquals(Boolean.FALSE,isVerifed);
+        assertEquals(Boolean.FALSE,isVerified);
 
     }
 
@@ -42,10 +42,10 @@ public class SettlementInstructionBusinessImplStubTest {
         String futureEffectiveSIController = "nullValue";
         String modelName = "modelName";
         String date = "date";
-        Boolean isVerifed = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
+        Boolean isVerified = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
                 modelName, date));
 
-        assertEquals(Boolean.FALSE,isVerifed);
+        assertEquals(Boolean.FALSE,isVerified);
 
     }
 
@@ -59,9 +59,9 @@ public class SettlementInstructionBusinessImplStubTest {
         String futureEffectiveSIController = "null";
         String modelName = "modelName";
         String date = "date";
-        Boolean isVerifed = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
+        Boolean isVerified = settlementInstructionBusiness.validate(new SettlementInstruction(futureEffectiveSIController,
                 modelName, date));
-        assertEquals(Boolean.FALSE,isVerifed);
+        assertEquals(Boolean.FALSE,isVerified);
     }
 
     @Test

@@ -1,6 +1,6 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -34,9 +34,9 @@ public class SettlementInstructionBusinessImplMockTest {
         SettlementInstructionBusinessImpl settlementInstructionBusiness = new
                 SettlementInstructionBusinessImpl(settlementInstructionService);
 
-        Boolean isVerifed = settlementInstructionBusiness.validate(settlementInstruction);
+        Boolean isVerified = settlementInstructionBusiness.validate(settlementInstruction);
 
-        assertEquals(Boolean.FALSE,isVerifed);
+        assertEquals(Boolean.FALSE,isVerified);
 
     }
 
@@ -57,9 +57,9 @@ public class SettlementInstructionBusinessImplMockTest {
                 new SettlementInstruction(futureEffectiveSIController, modelName, date);
         Mockito.when(settlementInstructionService.validateUsingAPI(settlementInstruction)).
                 thenReturn(response);
-        Boolean isVerifed = settlementInstructionBusiness.validate(settlementInstruction);
+        Boolean isVerified = settlementInstructionBusiness.validate(settlementInstruction);
 
-        assertEquals(Boolean.FALSE,isVerifed);
+        assertEquals(Boolean.FALSE,isVerified);
 
     }
 
@@ -78,8 +78,8 @@ public class SettlementInstructionBusinessImplMockTest {
                 new SettlementInstruction(futureEffectiveSIController, modelName, date);
         Mockito.when(settlementInstructionService.validateUsingAPI(settlementInstruction)).
                 thenReturn(null);
-        Boolean isVerifed = settlementInstructionBusiness.validate(settlementInstruction);
-        assertEquals(Boolean.FALSE,isVerifed);
+        Boolean isVerified = settlementInstructionBusiness.validate(settlementInstruction);
+        assertEquals(Boolean.FALSE,isVerified);
     }
 
     @Test

@@ -1,6 +1,6 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.vo.SettlementInstruction;
 
 import java.util.List;
 

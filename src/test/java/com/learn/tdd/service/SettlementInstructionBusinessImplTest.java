@@ -1,12 +1,11 @@
-package com.infosys.training.tdd.service;
+package com.learn.tdd.service;
 
-import com.infosys.training.tdd.helper.Common;
-import com.infosys.training.tdd.vo.SettlementInstruction;
+import com.learn.tdd.helper.Common;
+import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-
 public class SettlementInstructionBusinessImplTest {
 
     SettlementInstructionBusinessImpl settlementInstructionBusinessImpl;
@@ -18,25 +17,36 @@ public class SettlementInstructionBusinessImplTest {
 4. Instantiate Service class in test class.
 5. Now define that method in test class, it will fail/ show error, fix it.
 6. As aware we need to define these three inputted values which will be received from frontEnd application.
- *//*
-
+ */
+/*
     @Before
     public void setUp(){
 
         settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
     }
 
+   @Test
+    public void validateIfFutureEffectiveIsNull(){
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        String futureEffectiveSICOntroller=null;
+        String settlementModelName="abcTest123";
+        String settlementDate="10-10-2020";
+        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
     @Test
-    public void validateData() {
+    public void validateDetailsIfFieldsAreNull() {
         *//* Faking, Triangulation, three laws ..
-        **
-        * Fake It Until You Make IT" TDD approach
-        * You first create a unit test for new functionality that does not exist.
-        * Now, you have a unit test to a non existing method.
-        * You then create that method that doesn't do anything and your unit test compiles, but of course, fails.
-        * You then go on building your method, underlying functionality etc until your unit test succeeds.
-        * That's (kind of) test driven development.
-        * *//*
+         **
+         * Fake It Until You Make IT" TDD approach
+         * You first create a unit test for new functionality that does not exist.
+         * Now, you have a unit test to a non existing method.
+         * You then create that method that doesn't do anything and your unit test compiles, but of course, fails.
+         * You then go on building your method, underlying functionality etc until your unit test succeeds.
+         * That's (kind of) test driven development.
+         * *//*
         // Scenario two and Scenario 3.
         // Advance and Database Unit testing ..
 
@@ -50,7 +60,7 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateIfFutureEffectiveIsNotNullButModelNameIsNull(){
+    public void validateIfModelNameAndDateIsNull(){
         settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName=null;
@@ -83,11 +93,19 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateRegex(){
-        assertEquals(Boolean.FALSE, "@34eiodjioedjio".matches(Common.FUTURE_EFFECTIVE_PATTERN));
-        assertEquals(Boolean.TRUE, "abcABC".matches(Common.FUTURE_EFFECTIVE_PATTERN));
+    public void validateRegexWithNumericValues(){
+        assertEquals(Boolean.FALSE, "34eiodjioedjio".matches(Common.FUTURE_EFFECTIVE_PATTERN));
+    }
+
+    @Test
+    public void validateRegexWithSpecialCharacters(){
         assertEquals(Boolean.FALSE, "!@@$$!!@!#$(*^".matches(Common.FUTURE_EFFECTIVE_PATTERN));
 
+    }
+
+    @Test
+    public void validateRegexWithCorrectValue(){
+        assertEquals(Boolean.TRUE, "abcABC".matches(Common.FUTURE_EFFECTIVE_PATTERN));
     }
     @Test
     public void validateFutureEffectiveSIControllerWithSpecialCharactersAndInvalidScenarios(){
@@ -107,12 +125,16 @@ public class SettlementInstructionBusinessImplTest {
     }
 
     @Test
-    public void validateRegexSettlementModelName(){
-        assertEquals(Boolean.FALSE, "@34eiodjioedjio".matches(Common.MODEL_NAME_PATTERN));
-        assertEquals(Boolean.TRUE, "abcABC123".matches(Common.MODEL_NAME_PATTERN));
+    public void validateRegexSettlementModelNameWithSpecialCharacters(){
         assertEquals(Boolean.FALSE, "!@@$$!!@!#$(*^".matches(Common.MODEL_NAME_PATTERN));
 
     }
+
+    @Test
+    public void validateRegexSettlementModelNameWithValidCharacters(){
+        assertEquals(Boolean.TRUE, "abcABC123".matches(Common.MODEL_NAME_PATTERN));
+    }
+
     @Test
     public void validateFutureEffectiveSIControllerWithValidScenario(){
         settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
@@ -140,7 +162,4 @@ public class SettlementInstructionBusinessImplTest {
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }*/
-
-
-
 }

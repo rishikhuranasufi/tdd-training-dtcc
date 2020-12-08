@@ -1,4 +1,4 @@
-package com.infosys.training.tdd.vo;
+package com.learn.tdd.vo;
 
 public class SettlementInstruction {
 
