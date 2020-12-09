@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class SettlementInstructionController {
@@ -29,17 +31,51 @@ public class SettlementInstructionController {
         return "This is TDD Simulation Application for training purpose.";
     }
 
-    @RequestMapping(value = "/v1/verifyDetails/{futureEffectiveSICOntroller}/{settlementModelName}/{settlementDate}", method = RequestMethod.GET)
-    public ResponseEntity<?> verifyDetails(@PathVariable String futureEffectiveSICOntroller,
+    //First STORY
+    @RequestMapping(value = "/v1/validateFESICDetailsAvailability/{user}", method = RequestMethod.GET)
+    public ResponseEntity<?> validateFESICDetailsAvailability(@PathVariable String user) throws Exception {
+        if (settlementInstructionBusinessImpl.validateFESICDetailsForUser(user))
+            return ResponseEntity.ok(new ApiResponse(true,"FESIC Details available for user"));
+        else
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ApiResponse(false,"Details Not Available"));
+    }
+
+    //Second Story
+    @RequestMapping(value = "/v1/verifyFutureEffectiveController/{futureEffectiveSICOntroller}/{settlementModelName}/{settlementDate}", method = RequestMethod.GET)
+    public ResponseEntity<?> verifyFutureEffectiveController(@PathVariable String futureEffectiveSICOntroller,
                                             @PathVariable String settlementModelName, @PathVariable String settlementDate) {
 
-        logger.info("Inside Save Details");
-        if (settlementInstructionBusinessImpl.validate(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
+        logger.info("Inside verifyFutureEffectiveController Details");
+        if (settlementInstructionBusinessImpl.validateFutureEffectiveController(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
             return ResponseEntity.ok(new ApiResponse(true,"Details Verified successfully"));
         else
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
 
         //return ResponseEntity.ok(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
+    }
+
+    //Third Story
+    @RequestMapping(value = "/v1/verifySettlementModelName/{futureEffectiveSICOntroller}/{settlementModelName}/{settlementDate}", method = RequestMethod.GET)
+    public ResponseEntity<?> verifySettlementModelName(@PathVariable String futureEffectiveSICOntroller,
+                                            @PathVariable String settlementModelName, @PathVariable String settlementDate) {
+
+        logger.info("Inside verifySettlementModelName Details");
+        if (settlementInstructionBusinessImpl.validateModelName(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
+            return ResponseEntity.ok(new ApiResponse(true,"Details Verified successfully"));
+        else
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
+    }
+
+    //Fourth Story
+    @RequestMapping(value = "/v1/verifySettlementDate/{futureEffectiveSICOntroller}/{settlementModelName}/{settlementDate}", method = RequestMethod.GET)
+    public ResponseEntity<?> verifySettlementDate(@PathVariable String futureEffectiveSICOntroller,
+                                            @PathVariable String settlementModelName, @PathVariable String settlementDate) throws ParseException {
+
+        logger.info("Inside verifySettlementDate Details");
+        if (settlementInstructionBusinessImpl.validateSettlementDate(getSettlementInstruction(futureEffectiveSICOntroller, settlementModelName, settlementDate)))
+            return ResponseEntity.ok(new ApiResponse(true,"Details Verified successfully"));
+        else
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(new ApiResponse(false,"Details Not processed/ Validated Successfully"));
     }
 
     SettlementInstruction getSettlementInstruction(String futureEffectiveSICOntroller, String settlementModelName, String settlementDate) {

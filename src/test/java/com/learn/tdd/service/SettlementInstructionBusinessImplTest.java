@@ -1,16 +1,21 @@
 package com.learn.tdd.service;
 
+import com.learn.tdd.dao.SettlementInstructionDAOImpl;
+import com.learn.tdd.exception.IssueWhileExecutingQuery;
 import com.learn.tdd.helper.Common;
 import com.learn.tdd.vo.SettlementInstruction;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import java.text.ParseException;
 
 import static org.junit.Assert.*;
 
 public class SettlementInstructionBusinessImplTest {
 
     SettlementInstructionBusinessImpl settlementInstructionBusinessImpl;
-
+    SettlementInstructionDAOImpl settlementInstructionDAO;
 /* As a developer I need to think what actually I need to develop.
 1. I need to verify / validate inputted values.
 2. Its a Service logic.
@@ -22,23 +27,23 @@ public class SettlementInstructionBusinessImplTest {
 
     @Before
     public void setUp(){
-
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+        settlementInstructionDAO =
+                Mockito.mock(SettlementInstructionDAOImpl.class);
+        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl(settlementInstructionDAO);
     }
 
     @Test
     public void validateIfFutureEffectiveIsNull(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller=null;
         String settlementModelName="abcTest123";
         String settlementDate="10-10-2020";
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
 
     @Test
-    public void validateDetailsIfFieldsAreNull() {
+    public void validateDetailsIfModelNameisNull() {
         /* Faking, Triangulation, three laws ..
         **
         * Fake It Until You Make IT" TDD approach
@@ -55,40 +60,38 @@ public class SettlementInstructionBusinessImplTest {
         String futureEffectiveSICOntroller=null;
         String settlementModelName=null;
         String settlementDate=null;
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
 
     @Test
     public void validateIfModelNameAndDateIsNull(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName=null;
         String settlementDate=null;
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
 
-    @Test
-    public void validateIfFutureEffectiveAndModelIsNotNullButSettlmentDateIsNull(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
-        String futureEffectiveSICOntroller="abcTest";
-        String settlementModelName="abcTest123";
-        String settlementDate=null;
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
-                settlementModelName,settlementDate));
-        assertEquals(Boolean.FALSE, isVerified);
-    }
 
     @Test
-    public void validateIfAllValuesExists(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
+    public void validateIfValueExistsForFutureEffecticeSettlementController(){
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName="abcTest123";
         String settlementDate="1998-10-10";
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.TRUE, isVerified);
+    }
+
+    @Test
+    public void validateIfValueExistsForModelName(){
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest123";
+        String settlementDate="1998-10-10";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.TRUE, isVerified);
     }
@@ -110,17 +113,36 @@ public class SettlementInstructionBusinessImplTest {
     }
     @Test
     public void validateFutureEffectiveSIControllerWithSpecialCharactersAndInvalidScenarios(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest123@";
         String settlementModelName="abcTest";
         String settlementDate="1998-10-10";
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
 
         futureEffectiveSICOntroller="!@$*9@";
 
-        isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateFutureEffectiveSIControllerWithCharactersLengthMoreThan50(){
+        String futureEffectiveSICOntroller="abcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="1998-10-10";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateModelNameWithCharactersLengthMoreThan30(){
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTestabcTest";
+        String settlementDate="1998-10-10";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
@@ -138,29 +160,120 @@ public class SettlementInstructionBusinessImplTest {
 
     @Test
     public void validateFutureEffectiveSIControllerWithValidScenario(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName="abcTest123";
         String settlementDate="1998-10-10";
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateFutureEffectiveController(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.TRUE, isVerified);
     }
 
     @Test
     public void validateSettlementModelNameWithSpecialCharactersAndInvalidScenarios(){
-        settlementInstructionBusinessImpl = new SettlementInstructionBusinessImpl();
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName="abcTest";
         String settlementDate="1998-10-10";
-        Boolean isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        Boolean isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.TRUE, isVerified);
 
         settlementModelName="!@$*9@";
 
-        isVerified = settlementInstructionBusinessImpl.validate(new SettlementInstruction(futureEffectiveSICOntroller,
+        isVerified = settlementInstructionBusinessImpl.validateModelName(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.FALSE, isVerified);
     }
+
+    @Test
+    public void validateFESICDetailsForUserWithWrongUserName() throws Exception {
+        String userName = "WRONG_USERNAME";
+        Mockito.when(settlementInstructionDAO.findByUserName(userName)).
+                thenReturn(Boolean.FALSE);
+        Boolean isExists = settlementInstructionBusinessImpl.
+                validateFESICDetailsForUser(userName);
+        assertEquals(Boolean.FALSE, isExists);
+    }
+
+    @Test(expected = IssueWhileExecutingQuery.class)
+    public void validateFESICDetailsForUserThrowsAnException() throws Exception {
+        String userName = "WRONG_USERNAME";
+        Mockito.when(settlementInstructionDAO.findByUserName(userName)).
+                thenThrow(new IssueWhileExecutingQuery());
+        Boolean isExists = settlementInstructionBusinessImpl.
+                validateFESICDetailsForUser(userName);
+        assertEquals(Boolean.FALSE, isExists);
+    }
+
+    @Test
+    public void validateFESICDetailsForUserExists() throws Exception {
+        String userName = "Correct_username";
+        Mockito.when(settlementInstructionDAO.findByUserName(userName)).
+                thenReturn(Boolean.TRUE);
+        Boolean isExists = settlementInstructionBusinessImpl.
+                validateFESICDetailsForUser(userName);
+        assertEquals(Boolean.TRUE, isExists);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateWithValidValues() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="2020-12-12";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.TRUE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateisGreaterThan90Days() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="2021-12-12";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateisLessThanTodayDate() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="2020-12-05";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateisNull() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate=null;
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateWithInValidValues() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="1998-30-30";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+    @Test
+    public void validateSettlementInstructionDateWithInValidValuesAsAlphabhets() throws ParseException {
+        String futureEffectiveSICOntroller="abcTest";
+        String settlementModelName="abcTest";
+        String settlementDate="abcText";
+        Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
+                settlementModelName,settlementDate));
+        assertEquals(Boolean.FALSE, isVerified);
+    }
+
+
+
 }
