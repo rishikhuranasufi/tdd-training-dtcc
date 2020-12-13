@@ -218,7 +218,7 @@ public class SettlementInstructionBusinessImplTest {
     public void validateSettlementInstructionDateWithValidValues() throws ParseException {
         String futureEffectiveSICOntroller="abcTest";
         String settlementModelName="abcTest";
-        String settlementDate="2020-12-12";
+        String settlementDate="2020-12-15";
         Boolean isVerified = settlementInstructionBusinessImpl.validateSettlementDate(new SettlementInstruction(futureEffectiveSICOntroller,
                 settlementModelName,settlementDate));
         assertEquals(Boolean.TRUE, isVerified);
