@@ -7,14 +7,14 @@ orbs:
 jobs:
   build:
     docker:
-      - image: java@latest       
+      - image: circleci/openjdk:8u171-jdk
     steps:
       - checkout
       - run: 'mvn clean'
           #command: 
   test:
     docker:
-      - image: java@latest
+      - image: circleci/openjdk:8u171-jdk
     steps:
       - checkout
       - run: 'mvn test'
