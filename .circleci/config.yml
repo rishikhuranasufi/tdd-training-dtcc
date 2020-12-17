@@ -3,8 +3,31 @@ version: 2.1
 orbs:
   maven: circleci/maven@0.0.12
 
+# Define the jobs we want to run for this project
+jobs:
+  build:
+    docker:
+      - image: circleci/maven@0.0.12       
+    steps:
+      - checkout
+      - run: echo "this is the build job"
+          command: 'mvn clean'
+test:
+    docker:
+      - image: circleci/maven@0.0.12
+    steps:
+      - checkout
+      - run: echo "this is the test job"
+            command: 'test'
+
+#workflows:
+#  maven_test:
+#    jobs:
+#      - maven/test:
+#          command: 'clean test'
+# Orchestrate our job run sequence
 workflows:
-  maven_test:
+  build_and_test:
     jobs:
-      - maven/test:
-          command: 'clean test'
+      - build
+      - test
