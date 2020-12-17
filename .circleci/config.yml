@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run: 'mvn clean'
           #command: 
-   test:
+  test:
     docker:
       - image: circleci/maven@0.0.12
     steps:
