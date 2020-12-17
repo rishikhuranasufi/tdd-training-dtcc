@@ -6,15 +6,15 @@ orbs:
 # Define the jobs we want to run for this project
 jobs:
   build:
-    #docker:
-    #  - image: circleci/maven@0.0.12       
+    docker:
+      - image: maven@0.0.12       
     steps:
       - checkout
       - run: 'mvn clean'
           #command: 
   test:
-    #docker:
-    #  - image: circleci/maven@0.0.12
+    docker:
+      - image: maven@0.0.12
     steps:
       - checkout
       - run: 'mvn test'
