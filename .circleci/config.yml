@@ -10,15 +10,15 @@ jobs:
       - image: circleci/maven@0.0.12       
     steps:
       - checkout
-      - run: echo "this is the build job"
-          command: 'mvn clean'
+      - run: 'mvn clean'
+          #command: 
 test:
     docker:
       - image: circleci/maven@0.0.12
     steps:
       - checkout
-      - run: echo "this is the test job"
-            command: 'test'
+      - run: 'mvn test'
+          #  command: 'test'
 
 #workflows:
 #  maven_test:
