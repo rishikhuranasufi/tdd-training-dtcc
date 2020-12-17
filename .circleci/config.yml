@@ -7,14 +7,14 @@ orbs:
 jobs:
   build:
     docker:
-      - image: maven@0.0.12       
+      - image: java@latest       
     steps:
       - checkout
       - run: 'mvn clean'
           #command: 
   test:
     docker:
-      - image: maven@0.0.12
+      - image: java@latest
     steps:
       - checkout
       - run: 'mvn test'
