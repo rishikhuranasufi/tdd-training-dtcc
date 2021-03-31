@@ -16,8 +16,3 @@ For Frontend
 * IntelliJ (Community Edition)
 * GIT
 * Node
-
-# once installation is done please run following commands:-
-
-* mvn clean install (for installing all the dependencies)
-* java -jar target\calculator-0.0.1-SNAPSHOT.jar (to start project on windows OS)
